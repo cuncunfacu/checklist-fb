@@ -50,8 +50,8 @@ const ChecklistComplete: React.FC = () => {
 
 
     return (
-        <div className="container container-fluid d-flex justify-content-center">
-            <form className='col-lg-4 border p-4'>
+        <div className="container d-flex justify-content-center">
+            <form className='col-lg-6 col-xs-12 p-5 border'>
                 <h2 className="text-center">{checklist.name}</h2>
                 <TimesCompleted completedTimes={checklist.completedTimes }/>
                 {checklist.tasks.map((task) => {
