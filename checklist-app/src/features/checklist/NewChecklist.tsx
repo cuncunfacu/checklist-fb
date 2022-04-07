@@ -58,7 +58,7 @@ const NewChecklist: React.FC = () => {
 
                 { tasks ? tasks.map((task, index) => {
                     return(
-                        <div className="input-group mt-4">
+                        <div className="input-group mt-4" key={ task.id }>
                             <input type="text" className="form-control" value={ task.content } disabled/>
                             <button type="button" className="btn btn-danger" onClick={() => {handleRmvTask(index)}}>Remove</button>
                         </div>)
