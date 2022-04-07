@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom'
 import { RootState } from '../../app/store';
 import { useSelector } from 'react-redux';
+import TimesCompleted from './TimesCompleted';
 const Checklists: React.FC = () => {
 
     const checklists = useSelector((state: RootState) => state.checklists)
@@ -15,7 +16,9 @@ const Checklists: React.FC = () => {
                             <div className="card mb-4">
                                 <div className="card-body text-center">
                                     <h3>{checklist.name}</h3>
-                                    <p>Completed times: {checklist.completedTimes}</p>
+                                    <p>
+                                        <TimesCompleted completedTimes={checklist.completedTimes} />
+                                    </p>
                                     <Link to={'/complete/' + checklist.id} className="btn btn-primary">View checklist</Link>
                                 </div>
                             </div>
