@@ -1,24 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
-
-const initialState = [
-    {
-        id: 'a',
-        name: "checklist1",
-        tasks: [
-            { id:10, content: "Buy Milk" },
-            { id:11, content: "Buy Cheese" }
-        ]
-    },
-    {
-        id: 'b',
-        name:"checklist2",
-        tasks: [
-            { id:10, content: "Excercise" },
-            { id:11, content: "Meditate" }
-        ]
-    },
-
-]
+import initialState from '../../chData';
 
 export const checklistsSlice = createSlice({
     name: 'checklists',
@@ -26,10 +7,23 @@ export const checklistsSlice = createSlice({
     reducers: {
         checklistAdded: (state, action) => {
             state.push(action.payload)
+        },
+        checklistCompleted: (state, action) => {
+            const { id } = action.payload
+            const existingChecklist = state.find(checklist => checklist.id === id)
+            if(existingChecklist) {
+                existingChecklist.completedTimes += 1
+            }
+        },
+        checklistDeleted: (state, action) => {
+            const { id } = action.payload
+            return state.filter((checklist) => {
+                return checklist.id !== id
+            })
         }
     }
 })
 
-export const { checklistAdded } = checklistsSlice.actions
+export const { checklistAdded, checklistCompleted, checklistDeleted } = checklistsSlice.actions
 
 export default checklistsSlice.reducer

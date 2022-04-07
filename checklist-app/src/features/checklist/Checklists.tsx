@@ -7,22 +7,28 @@ const Checklists: React.FC = () => {
     const checklists = useSelector((state: RootState) => state.checklists)
 
     return (
-        <div className="row">
-            {checklists.map((checklist) => {
-                return (
-                    <div className="col-lg-3" key={checklist.id}>
-                        <div className="card">
-                            <div className="card-body text-center">
-                                <h3>{checklist.name}</h3>
-                                <p>Completed times: XX</p>
-                                <Link to={'/complete/' + checklist.id} className="btn btn-primary">Complete</Link>
+        <div className="col">
+            <div className="row">
+                {checklists.map((checklist) => {
+                    return (
+                        <div className="col-lg-6" key={checklist.id}>
+                            <div className="card mb-4">
+                                <div className="card-body text-center">
+                                    <h3>{checklist.name}</h3>
+                                    <p>Completed times: {checklist.completedTimes}</p>
+                                    <Link to={'/complete/' + checklist.id} className="btn btn-primary">View checklist</Link>
+                                </div>
                             </div>
                         </div>
+                    )
+                })}
+            </div>
+            <div className="row">
+                <div className="card mb-4">
+                    <div className="card-body text-center">
+                        <Link to="/new" className="btn btn-success">New checklist</Link>
                     </div>
-                )
-            })}
-            <div className="col-lg-3 d-flex justify-content-center align-items-center">
-                <Link to="/new" className="btn btn-success">New checklist</Link>
+                </div>
             </div>
         </div>
     )

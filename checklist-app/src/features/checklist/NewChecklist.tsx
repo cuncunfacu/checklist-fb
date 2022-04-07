@@ -39,6 +39,7 @@ const NewChecklist: React.FC = () => {
     const handleCreateChecklist = () => {
         dispatch(checklistAdded({
             id: nanoid(),
+            completedTimes: 0,
             name: checklistName,
             tasks: tasks
         }))

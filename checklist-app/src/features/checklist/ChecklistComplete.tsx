@@ -1,8 +1,11 @@
 import React from 'react';
-import { useParams } from 'react-router-dom'
+import { Badge } from 'react-bootstrap';
+import { useParams, useNavigate, Link } from 'react-router-dom'
 import { RootState } from '../../app/store';
 import { useSelector } from 'react-redux';
 
+import { useDispatch } from 'react-redux';
+import { checklistCompleted, checklistDeleted } from './checklistsSlice';
 
 const ChecklistComplete: React.FC = () => {
     const { checklistId } = useParams()
@@ -10,30 +13,45 @@ const ChecklistComplete: React.FC = () => {
     const checklist = useSelector((state: RootState) =>
         state.checklists.find(checklist => checklist.id === checklistId)
     )
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+
     if (!checklist) {
         return <p>Checklist not found!</p>
     }
+
+    const handleComplete = () => {
+        dispatch(checklistCompleted({id: checklist.id}))
+        navigate('/')
+    }
+
+    const handleDelete = () => {
+        dispatch(checklistDeleted({id: checklist.id}))
+        navigate('/')
+    }
+
     return (
-        <div className="container container-fluid">
-            <div className="col">
-                <div className="row">
-                    <h2>{checklist.name}</h2>
+        <div className="container container-fluid d-flex justify-content-center">
+            <form className='col-lg-4 border p-4'>
+                <h2 className="text-center">{checklist.name}</h2>
+                <Badge bg="secondary" className="mb-4">{ checklist.completedTimes} times completed</Badge>
+                {checklist.tasks.map((task) => {
+                    return (
+                        <div className="form-check mb-3" key={task.id}>
+                            <input type="checkbox" className="form-check-input" id={"check-" + task.id} />
+                            <label className="form-check-label" htmlFor={"check-" + task.id}>{task.content}</label>
+                        </div>
+                    )
+                }
+                )}
+                <div className="row p-3">
+                    <button className="btn btn-success" type="button" onClick={handleComplete}>Complete!</button>
+                    <Link to="/" className="btn btn-secondary">Cancel</Link>
                 </div>
-                <div className="row">
-                    <form>
-                        {checklist.tasks.map((task) => {
-                            return (
-                                <div className="form-check" key={task.id}>
-                                    <input type="checkbox" className="form-check-input" id={"check-"+task.id}/>
-                                    <label className="form-check-label" htmlFor={"check-"+task.id}>{task.content}</label>
-                                </div>
-                            )
-                        }
-                        )}
-                        <button className="btn btn-primary" type="button">Complete!</button>
-                    </form>
+                <div className="row mt-4 p-3">
+                    <button type="button" className="btn btn-danger" onClick={handleDelete}>DELETE CHECKLIST</button>
                 </div>
-            </div>
+            </form>
         </div>
     )
 }
