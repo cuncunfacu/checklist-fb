@@ -50,14 +50,14 @@ const ChecklistComplete: React.FC = () => {
 
 
     return (
-        <div className="container d-flex justify-content-center">
-            <form className='col-lg-6 col-xs-12 p-5 border'>
+        <div className="row d-flex justify-content-center">
+            <form className='col-lg-4'>
                 <h2 className="text-center">{checklist.name}</h2>
-                <TimesCompleted completedTimes={checklist.completedTimes }/>
+                <TimesCompleted completedTimes={checklist.completedTimes} />
                 {checklist.tasks.map((task) => {
                     return (
                         <div className="form-check mb-3" key={task.id}>
-                            <input type="checkbox" className="form-check-input" id={"check-" + task.id} onChange={(e) => handleCheckTask(e.target.checked)}/>
+                            <input type="checkbox" className="form-check-input" id={"check-" + task.id} onChange={(e) => handleCheckTask(e.target.checked)} />
                             <label className="form-check-label" htmlFor={"check-" + task.id}>{task.content}</label>
                         </div>
                     )
