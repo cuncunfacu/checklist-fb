@@ -6,7 +6,7 @@ import { useSelector } from 'react-redux';
 
 import { useDispatch } from 'react-redux';
 import { checklistCompleted, checklistDeleted } from './checklistsSlice';
-
+import  TimesCompleted  from './TimesCompleted';
 
 const ChecklistComplete: React.FC = () => {
     const { checklistId } = useParams()
@@ -50,10 +50,10 @@ const ChecklistComplete: React.FC = () => {
 
 
     return (
-        <div className="container container-fluid d-flex justify-content-center">
-            <form className='col-lg-4 border p-4'>
+        <div className="container d-flex justify-content-center">
+            <form className='col-lg-6 col-xs-12 p-5 border'>
                 <h2 className="text-center">{checklist.name}</h2>
-                <Badge bg="secondary" className="mb-4">{ checklist.completedTimes} times completed</Badge>
+                <TimesCompleted completedTimes={checklist.completedTimes }/>
                 {checklist.tasks.map((task) => {
                     return (
                         <div className="form-check mb-3" key={task.id}>
