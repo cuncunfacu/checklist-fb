@@ -1,5 +1,5 @@
-import React, {useState} from 'react';
-import {Link} from 'react-router-dom';
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom'
 import { nanoid } from '@reduxjs/toolkit'
@@ -32,7 +32,7 @@ const NewChecklist: React.FC = () => {
 
     const handleRmvTask = (taskIdx: number) => {
         if (tasks) {
-            setTasks(tasks.filter((_,index) => { return taskIdx != index}))
+            setTasks(tasks.filter((_,index) => { return taskIdx !== index}))
         }
     }
 
@@ -69,7 +69,7 @@ const NewChecklist: React.FC = () => {
                     <button type="button" className="btn btn-success" onClick={handleAddTask} disabled={!newTask}>Add Task</button>
                 </div>
                 <div className="row mt-4 p-4">
-                    <button type="button" className="btn btn-success" onClick={handleCreateChecklist}> Create Checklist</button>
+                    <button type="button" className="btn btn-success" onClick={handleCreateChecklist} disabled={tasks && tasks.length > 0 && checklistName ? false : true}> Create Checklist</button>
                     <Link to="/" className="btn btn-danger"> Cancel</Link>
                 </div>
             </form>

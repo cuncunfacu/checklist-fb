@@ -1,20 +1,25 @@
 const initialState = [
     {
         id: 'a',
-        name: "checklist1",
-        completedTimes: 2,
+        name: "Morning Routine",
+        completedTimes: 11,
         tasks: [
-            { id:10, content: "Buy Milk" },
-            { id:11, content: "Buy Cheese" }
+            { id:"a", content: "Make my bed" },
+            { id:"b", content: "Have breakfast" },
+            { id:"c", content: "Brush teeth" },
+            { id:"d", content: "Take a shower" },
+            { id:"e", content: "Check email" },
         ]
     },
     {
         id: 'b',
-        name:"checklist2",
+        name:"Going out of the Country",
         completedTimes: 3,
         tasks: [
-            { id:10, content: "Excercise" },
-            { id:11, content: "Meditate" }
+            { id:"f", content: "Passport" },
+            { id:"g", content: "Plane tickets" },
+            { id:"h", content: "Money" },
+            { id:"j", content: "Phone + charger" },
         ]
     },
 ]

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Badge } from 'react-bootstrap';
 import { useParams, useNavigate, Link } from 'react-router-dom'
 import { RootState } from '../../app/store';
@@ -6,6 +6,7 @@ import { useSelector } from 'react-redux';
 
 import { useDispatch } from 'react-redux';
 import { checklistCompleted, checklistDeleted } from './checklistsSlice';
+
 
 const ChecklistComplete: React.FC = () => {
     const { checklistId } = useParams()
@@ -15,6 +16,9 @@ const ChecklistComplete: React.FC = () => {
     )
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    
+    const [ checkedTasks, setCheckedTasks ] = useState(0);
+    const [ completeEnabled, setCompleteEnabled ] = useState(false)
 
     if (!checklist) {
         return <p>Checklist not found!</p>
@@ -30,6 +34,21 @@ const ChecklistComplete: React.FC = () => {
         navigate('/')
     }
 
+    const handleCheckTask = (checked: boolean) => {
+        if(checked) {
+            const newChTaskLength = checkedTasks+1
+            
+            setCheckedTasks(newChTaskLength)
+            if (newChTaskLength === checklist.tasks.length) {
+                setCompleteEnabled(true)
+            }
+        } else {
+            setCompleteEnabled(false)
+            setCheckedTasks(checkedTasks-1)
+        }
+    }
+
+
     return (
         <div className="container container-fluid d-flex justify-content-center">
             <form className='col-lg-4 border p-4'>
@@ -38,14 +57,14 @@ const ChecklistComplete: React.FC = () => {
                 {checklist.tasks.map((task) => {
                     return (
                         <div className="form-check mb-3" key={task.id}>
-                            <input type="checkbox" className="form-check-input" id={"check-" + task.id} />
+                            <input type="checkbox" className="form-check-input" id={"check-" + task.id} onChange={(e) => handleCheckTask(e.target.checked)}/>
                             <label className="form-check-label" htmlFor={"check-" + task.id}>{task.content}</label>
                         </div>
                     )
                 }
                 )}
                 <div className="row p-3">
-                    <button className="btn btn-success" type="button" onClick={handleComplete}>Complete!</button>
+                    <button className="btn btn-success" type="button" onClick={handleComplete} disabled={!completeEnabled}>Complete!</button>
                     <Link to="/" className="btn btn-secondary">Cancel</Link>
                 </div>
                 <div className="row mt-4 p-3">
